@@ -23,6 +23,8 @@ flask-bcrypt = "*"
 itsdangerous = "==2.0.0"
 flask-mail = "*"
 flask-swagger-ui = "*"
+cython = "*"
+pyyaml = "==6.0.1"
 
 [requires]
 python_version = "3.10"
