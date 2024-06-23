@@ -29,9 +29,11 @@ export const UserHome = () => {
 
     // Fetch categories from the backend when component mounts
     useEffect(() => {
-        actions.fetchUserCategories();
-        actions.itemClear();
-    }, []);
+        if (store.user) {
+            actions.fetchUserCategories();
+            actions.itemClear();
+        }
+    }, [store.user]);
 
     const toggleModal = () => {
         setIsModalOpen(!isModalOpen);
@@ -39,7 +41,7 @@ export const UserHome = () => {
 
     const handleCreateBoard = async () => {
         try {
-            const response = await fetch(`${backendURL}/api/categories/${store.user}`, {
+            const response = await fetch(`${backendURL}/categories/${store.user}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

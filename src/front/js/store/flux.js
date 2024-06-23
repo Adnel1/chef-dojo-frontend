@@ -1,4 +1,4 @@
-const base = process.env.BACKEND_URL + "/api/";
+const base = process.env.BACKEND_URL;
 
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
@@ -15,7 +15,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		actions: {
 			itemSearch: async (search) => {
 				try {
-					const response = await fetch(base + 'search', {
+					const response = await fetch(`${base}/search`, {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json'
@@ -46,30 +46,35 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			handleLogin: async (email, password) => {
 				try {
-					const response = await fetch(base + 'login', {
+					const response = await fetch(`${base}/login`, {
 						method: 'POST',
 						headers: {
-							'Content-Type': 'application/json'
+							'Content-Type': 'application/x-www-form-urlencoded'
 						},
-						body: JSON.stringify({
-							"email": email,
+						body: new URLSearchParams({
+							"username": email,
 							"password": password
-						}),
+						})
 					});
 					const result = await response.json();
 					console.log("This came from the back-end", result);
-					sessionStorage.setItem("token", result.access_token);
-					sessionStorage.setItem("user", result.user_id);
-					setStore({ token: result.access_token });
-					setStore({ user: result.user_id });
-					return true;
+					if (response.ok) {
+						sessionStorage.setItem("token", result.access_token);
+						sessionStorage.setItem("user", result.user_id);
+						setStore({ token: result.access_token, user: result.user_id });
+						return true;
+					} else {
+						console.error('Error:', result.detail);
+						return false;
+					}
 				} catch (error) {
 					console.error('Error fetching data:', error);
+					return false;
 				}
 			},
 			handleSignup: async (email, password) => {
 				try {
-					const response = await fetch(base + 'signup', {
+					const response = await fetch(`${base}/signup`, {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json'
@@ -95,12 +100,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 				sessionStorage.removeItem("user");
 				localStorage.removeItem("items");
 				setStore({ token: null });
-                setStore({ items: [] });
+				setStore({ items: [] });
 				setStore({ user: null });
 			},
 			handlePasswordReset: async (email) => {
 				try {
-					const response = await fetch(base + 'reset-password', {
+					const response = await fetch(`${base}/reset-password`, {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json'
@@ -123,7 +128,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			handlePasswordChange: async (password, token) => {
 				try {
-					const response = await fetch(base + 'change-password', {
+					const response = await fetch(`${base}/change-password`, {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json'
@@ -153,37 +158,32 @@ const getState = ({ getStore, getActions, setStore }) => {
 				console.log(getStore().items)
 			},
 			fetchUserCategories: async () => {
-                try {
-                    const response = await fetch(base + 'categories/' + getStore().user, {
-                        method: 'GET',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${getStore().token}` // Pass the token for authenticated requests
-                        }
-                    });
-                    const result = await response.json();
-					if (result.data) {
+				const user_id = getStore().user;
+				console.log('Fetching categories for user_id:', user_id);
 
-						result.data.sort(function (a, b) {
-							if (a.category_name.toUpperCase() < b.category_name.toUpperCase()) {
-								return -1;
-							}
-							if (a.category_name.toUpperCase() > b.category_name.toUpperCase()) {
-								return 1;
-							}
-							return 0;
-						});
+				try {
+					const response = await fetch(`${base}/categories/${user_id}`, {
+						method: 'GET',
+						headers: {
+							'Content-Type': 'application/json',
+							'Authorization': `Bearer ${getStore().token}`
+						}
+					});
+					const result = await response.json();
+					console.log('API response:', result);
 
-						setStore({ categories: result.data });
-					}
-					else {
+					if (Array.isArray(result) && result.length > 0) {
+						result.sort((a, b) => a.category_name.localeCompare(b.category_name));
+						setStore({ categories: result });
+						console.log('Categories set in store:', result);
+					} else {
 						setStore({ categories: [] });
+						console.log('No categories found, setting empty array in store.');
 					}
-					console.log(result)
-                } catch (error) {
-                    console.error('Error fetching user categories:', error);
-                }
-            },
+				} catch (error) {
+					console.error('Error fetching user categories:', error);
+				}
+			},
 			fetchUserCategoriesRecipes: async (categoryId) => {
 				try {
 					const response = await fetch(base + `recipes/${getStore().user}/${categoryId}`, {
@@ -195,7 +195,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 					if (response.ok) {
 						const result = await response.json();
-						
+
 						result.sort(function (a, b) {
 							if (a.recipe_name.toUpperCase() < b.recipe_name.toUpperCase()) {
 								return -1;
@@ -212,7 +212,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					} else {
 						setStore({ recipes: [] });
 						localStorage.setItem("recipes", JSON.stringify([])); // Persist empty array to localStorage
-            			return []; // Return an empty array if no results
+						return []; // Return an empty array if no results
 					}
 				} catch (error) {
 					console.error('Error fetching user categories:', error);
