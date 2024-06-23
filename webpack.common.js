@@ -1,7 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   entry: ['./src/front/js/index.js'],
@@ -45,6 +44,8 @@ module.exports = {
       favicon: '4geeks.ico',
       template: 'template.html'
     }),
-    new Dotenv()
+    new webpack.DefinePlugin({
+      'process.env.BACKEND_URL': JSON.stringify(process.env.BACKEND_URL)
+    })
   ]
 };
