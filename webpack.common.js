@@ -1,12 +1,15 @@
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
-  entry: ['./src/front/js/index.js'],
+  entry: [
+    './src/front/js/index.js'
+  ],
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'build'),
+    path: path.resolve(__dirname, 'public'),
     publicPath: '/'
   },
   module: {
@@ -17,35 +20,29 @@ module.exports = {
         use: ['babel-loader']
       },
       {
-        test: /\.(css|scss)$/,
-        use: [
-          'style-loader',
-          'css-loader'
-        ]
-      },
+        test: /\.(css|scss)$/, use: [{
+          loader: "style-loader" // creates style nodes from JS strings
+        }, {
+          loader: "css-loader" // translates CSS into CommonJS
+        }]
+      }, //css only files
       {
-        test: /\.(png|svg|jpg|gif|jpeg|webp)$/,
-        use: {
+        test: /\.(png|svg|jpg|gif|jpeg|webp)$/, use: {
           loader: 'file-loader',
           options: { name: '[name].[ext]' }
         }
-      },
-      {
-        test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)|\.svg($|\?)/,
-        use: ['file-loader']
-      }
+      }, //for images
+      { test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)|\.svg($|\?)/, use: ['file-loader'] } //for fonts
     ]
   },
   resolve: {
-    extensions: ['*', '.js', '.jsx']
+    extensions: ['*', '.js']
   },
   plugins: [
     new HtmlWebpackPlugin({
       favicon: '4geeks.ico',
       template: 'template.html'
     }),
-    new webpack.DefinePlugin({
-      'process.env.BACKEND_URL': JSON.stringify(process.env.BACKEND_URL)
-    })
+    new Dotenv({ safe: true, systemvars: true })
   ]
 };
