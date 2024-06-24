@@ -186,7 +186,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			fetchUserCategoriesRecipes: async (categoryId) => {
 				try {
-					const response = await fetch(base + `recipes/${getStore().user}/${categoryId}`, {
+					const response = await fetch(base + `/recipes/${getStore().user}/${categoryId}`, {
 						method: 'GET',
 						headers: {
 							'Content-Type': 'application/json',
@@ -221,7 +221,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			fetchRecipeById: async (id) => {
 				try {
-					const response = await fetch(base + `recipe/${id}`, {
+					const response = await fetch(`${base}/recipes/${id}`, {
 						method: 'GET',
 						headers: {
 							'Content-Type': 'application/json',
@@ -240,7 +240,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			fetchCategoryById: async (categoryId) => {
 				try {
-					const response = await fetch(base + `category/${categoryId}`, {
+					const response = await fetch(`${base}/category/${categoryId}`, {
 						method: 'GET',
 						headers: {
 							'Content-Type': 'application/json',
@@ -280,7 +280,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}),
 				};
 				console.log({ opts: opts })
-				fetch(base + `recipes/${user_id}/${category_id}`, opts)
+				fetch(base + `/recipes/${user_id}/${category_id}`, opts)
 					.then((response) => response.json())
 					.then((data) => {
 						if (data.msg == "ok") {

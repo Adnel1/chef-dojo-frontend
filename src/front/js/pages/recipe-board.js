@@ -92,7 +92,7 @@ export const RecipeBoard = () => {
     event.preventDefault();
     try {
       const recipeId = store.recipes[index].recipe_id; // Make sure this is the correct property name
-      const response = await fetch(`${backendURL}/api/recipe/${recipeId}`, {
+      const response = await fetch(`${backendURL}/recipes/${recipeId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
