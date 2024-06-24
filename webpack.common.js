@@ -1,12 +1,9 @@
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const Dotenv = require('dotenv-webpack');
 
 module.exports = {
-  entry: [
-    './src/front/js/index.js'
-  ],
+  entry: ['./src/front/js/index.js'],
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'public'),
@@ -20,29 +17,37 @@ module.exports = {
         use: ['babel-loader']
       },
       {
-        test: /\.(css|scss)$/, use: [{
-          loader: "style-loader" // creates style nodes from JS strings
-        }, {
-          loader: "css-loader" // translates CSS into CommonJS
-        }]
-      }, //css only files
+        test: /\.(css|scss)$/,
+        use: [
+          'style-loader', // creates style nodes from JS strings
+          'css-loader'    // translates CSS into CommonJS
+        ]
+      },
       {
-        test: /\.(png|svg|jpg|gif|jpeg|webp)$/, use: {
+        test: /\.(png|svg|jpg|gif|jpeg|webp)$/,
+        use: {
           loader: 'file-loader',
           options: { name: '[name].[ext]' }
         }
-      }, //for images
-      { test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)|\.svg($|\?)/, use: ['file-loader'] } //for fonts
+      },
+      {
+        test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)|\.svg($|\?)/,
+        use: ['file-loader']
+      }
     ]
   },
   resolve: {
-    extensions: ['*', '.js']
+    extensions: ['*', '.js', '.jsx']
   },
   plugins: [
     new HtmlWebpackPlugin({
       favicon: '4geeks.ico',
       template: 'template.html'
     }),
-    new Dotenv({ safe: true, systemvars: true })
+    new webpack.DefinePlugin({
+      'process.env': {
+        'BACKEND_URL': JSON.stringify(process.env.BACKEND_URL || 'https://chef-dojo-backend-b16a71e8fca3.herokuapp.com')
+      }
+    })
   ]
 };
