@@ -62,7 +62,7 @@ export const UserHome = () => {
     const handleDeleteBoard = async (event, index) => {
         event.preventDefault();
         try {
-            const response = await fetch(`${backendURL}/api/categories/${store.user}/${store.categories[index].category_id}`, {
+            const response = await fetch(`${backendURL}/categories/${store.user}/${store.categories[index].category_id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
