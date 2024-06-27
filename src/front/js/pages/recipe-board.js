@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import "../../styles/recipe-board.css";
 import { CSSTransition } from 'react-transition-group';
 import { useNavigate } from 'react-router-dom';
-import { SearchBar } from "../component/search-bar";
+import { SearchBarModal } from "../component/search-bar-modal";
 import { BackButton } from "../component/back-button";
 
 export const RecipeBoard = () => {
@@ -196,7 +196,7 @@ export const RecipeBoard = () => {
                         </label>
                       </div>
                       <div className="col-12">
-                        <SearchBar />
+                        <SearchBarModal />
                       </div>
                     </div>
 
