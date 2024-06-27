@@ -2,12 +2,21 @@ import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { BackButton } from "../component/back-button";
+import { useNavigate } from 'react-router-dom';
 import "../../styles/home.css";
 
 export const RecipePage = () => {
     const { id } = useParams();
     const { store, actions } = useContext(Context);
+    const forward = useNavigate();
     const [recipe, setRecipe] = useState(null);
+
+    // Sends the user to the main home page if not logged in
+    useEffect(() => {
+        if (store.token == null) {
+            forward("/");
+        }
+    }, [store.token, forward]);
 
     useEffect(() => {
         const fetchRecipe = async () => {

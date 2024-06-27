@@ -10,7 +10,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			recipe_id: null,
 			category_id: null,
 			categories: [],
-			recipes: []
+			search: false
 		},
 		actions: {
 			itemSearch: async (search) => {
@@ -31,6 +31,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					console.error('Error fetching data:', error);
 				}
+			},
+			setSearch: (search) => {
+				setStore({ search });
 			},
 			itemClear: () => {
 				localStorage.removeItem("items");

@@ -11,13 +11,6 @@ export const ItemDetail = () => {
     const { id } = useParams();
     const forward = useNavigate();
 
-    // Sends the user to the main home page if not logged in
-    useEffect(() => {
-        if (store.token == null) {
-            forward("/");
-        }
-    }, [store.token, forward]);
-
     // Check if store.items array exists and has at least one item
     if (!store.items || store.items.length === 0) {
         // If the array is empty or undefined, render an error message or return null
