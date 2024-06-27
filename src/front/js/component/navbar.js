@@ -25,10 +25,10 @@ export const Navbar = () => {
 					{!store.token ? (
 						<>
 							<div className="Login-Button">
-								<a className="btn button-default rounded-pill me-3" href="/login">Log In</a>
+								<Link to={"/login"} className="btn button-default rounded-pill me-3" href="/login">Log In</Link>
 							</div>
 							<div className="Signup-Button">
-								<a className="btn button-accent rounded-pill" href="/signup">Sign Up</a>
+								<Link to={"/signup"} className="btn button-accent rounded-pill">Sign Up</Link>
 							</div>
 						</>
 					) : (

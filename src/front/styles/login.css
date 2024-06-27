@@ -24,3 +24,9 @@
 .login-form h2 {
     font-weight: 1000;
 }
+
+@media (max-width: 600px) {
+    .login-form {
+        margin-top: 4em;
+    }
+}
