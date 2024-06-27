@@ -18,7 +18,6 @@ export const RecipeBoard = () => {
   const [categoryRecipes, setCategoryRecipes] = useState(null);
   const modalRef = useRef(null);
   const [category, setCategory] = useState(null);
-  const [search, setSearch] = useState("");
   const [selectedIngredients, setSelectedIngredients] = useState([]);
   const backendURL = process.env.BACKEND_URL;
   const forward = useNavigate();

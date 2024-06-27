@@ -109,7 +109,11 @@ export const UserHome = () => {
                 <Modal.Body>
                     <Form>
                         <Form.Group controlId="formCategoryName">
-                            <Form.Control type="text" placeholder="Board Name" value={boardName} onChange={(e) => setBoardName(e.target.value)} />
+                            <Form.Control type="text" placeholder="Board Name" value={boardName} onChange={(e) => setBoardName(e.target.value)} onKeyPress={(element) => {
+                                if (element.key === "Enter") {
+                                    handleCreateBoard();
+                                };
+                            }} />
                         </Form.Group>
                         <Button variant="danger" className="btn-danger" style={{ marginTop: '20px' }} onClick={handleCreateBoard}>
                             Create
