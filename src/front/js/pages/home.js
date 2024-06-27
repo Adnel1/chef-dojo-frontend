@@ -32,7 +32,7 @@ export const Home = () => {
                 </div>
 
                 <div className="">
-                    <Link to={"/signup"} className="btn button-accent rounded-pill fs-5 ps-4 pe-4 pt-3 pb-3">Get Started</Link>
+                    <Link to={"/signup"} className="btn button-accent rounded-pill fs-5 ps-4 pe-4 pt-3 pb-3 mb-5">Get Started</Link>
                 </div>
             </div>
         </>

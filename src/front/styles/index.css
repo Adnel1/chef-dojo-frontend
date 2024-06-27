@@ -33,17 +33,9 @@ body {
 }
 
 .scrollable-section {
-    height: 25vw;
+    height: 90%;
     overflow-x: hidden;
     overflow-y: auto;
-}
-
-.recipe_button {
-    border: 2px solid black;
-    border-radius: 10px;
-    font-size: 20px;
-    margin-left: 300px;
-    margin-right: 300px;
 }
 
 .drop-shadow {
@@ -109,7 +101,7 @@ body {
     width: 100%;
     height: 2.8rem;
     outline: none;
-    border: none;
+    border: 1px solid #bbb;
     border-radius: 1.625rem;
     font-size: 1rem;
 }
@@ -128,4 +120,34 @@ body {
 
 .search-query-submit:hover {
     cursor: pointer;
+}
+
+/*
+  Framer motion CSS
+*/
+
+.overlay {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    z-index: 1000;
+}
+  
+.overlay-content {
+    padding: 20px;
+    width: 100%;
+    background: white;
+    top: 15em;
+    bottom: 0;
+    position: fixed;
+}
+
+.close-item-list {
+    position: fixed;
+    top: 10em;
 }

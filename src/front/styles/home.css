@@ -7,7 +7,7 @@
 */
 
 .home-title {
-    font-size: 5em;
+    font-size: 4em;
     font-weight: bold;
     text-transform: capitalize;
     color: var(--dark);
@@ -17,4 +17,10 @@
     font-size: 1.4em;
     line-height: 1.25em;
     color: var(--dark);
+}
+
+@media (max-width: 600px) {
+    .home-title {
+        font-size: 3em;
+    }
 }
