@@ -7,10 +7,17 @@ export const LoginForm = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const handleClickSubmit = (event) => {
-        actions.handleLogin(email, password);
-        event.preventDefault()
-    };
+    const handleClickSubmit = async (event) => {
+        event.preventDefault();
+        const success = await actions.handleLogin(email, password);
+        if (success) {
+            alert("Logged in successfully!");
+            // optionally: navigate to homepage or dashboard
+            // navigate("/dashboard"); (if using useNavigate)
+        } else {
+            alert("Login failed. Please check your credentials.");
+        }
+    };    
 
     return (
         <>
