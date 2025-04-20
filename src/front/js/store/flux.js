@@ -83,27 +83,31 @@ const getState = ({ getStore, getActions, setStore }) => {
 							'Content-Type': 'application/json'
 						},
 						body: JSON.stringify({
-							"email": email,
-							"password": password
+							email: email,
+							password: password
 						}),
 					});
-					const result = await response.json();
+			
+					const text = await response.text();
+					const result = text ? JSON.parse(text) : {};
+			
 					console.log("This came from the back-end", result);
-
+			
 					if (response.ok) {
 						sessionStorage.setItem("token", result.access_token);
 						sessionStorage.setItem("user", result.user_id);
 						setStore({ token: result.access_token });
 						setStore({ user: result.user_id });
-						return { success: true, message: "Profile created successfully!" };
+						return true;
 					} else {
-						return { success: false, message: result.detail || "Signup failed." };
+						console.error("Signup failed:", result?.detail || "No error message from backend");
+						return false;
 					}
 				} catch (error) {
 					console.error('Error fetching data:', error);
-					return { success: false, message: "Network error during signup." };
+					return false;
 				}
-			},
+			},			
 			handleLogout: () => {
 				sessionStorage.removeItem("token");
 				sessionStorage.removeItem("user");
