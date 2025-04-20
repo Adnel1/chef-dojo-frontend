@@ -1,4 +1,4 @@
-const base = process.env.BACKEND_URL;
+const base = process.env.REACT_APP_BACKEND_URL;
 
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
