@@ -1,3 +1,6 @@
+const dotenv = require('dotenv');
+dotenv.config();
+
 const { merge } = require('webpack-merge');
 const common = require('./webpack.common.js');
 const TerserPlugin = require('terser-webpack-plugin');
@@ -15,7 +18,7 @@ module.exports = merge(common, {
     plugins: [
         new webpack.DefinePlugin({
             'process.env': {
-                'BACKEND_URL': JSON.stringify(process.env.BACKEND_URL || 'https://chef-dojo-backend-b16a71e8fca3.herokuapp.com')
+                'BACKEND_URL': JSON.stringify(process.env.BACKEND_URL)
             }
         })
     ]

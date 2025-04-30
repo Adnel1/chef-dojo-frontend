@@ -13,8 +13,8 @@ services:
         value: "0"
       - key: FLASK_APP_KEY
         value: "any key works"
-      # - key: BACKEND_URL
-      #   value: "https://chef-dojo-backend-b16a71e8fca3.herokuapp.com"
+      - key: BACKEND_URL
+        value: "https://chef-dojo-backend.onrender.com/"
 
 # Uncomment and configure if you are using a database
 # databases:

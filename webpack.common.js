@@ -1,3 +1,6 @@
+const dotenv = require('dotenv');
+dotenv.config();
+
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -46,7 +49,7 @@ module.exports = {
     }),
     new webpack.DefinePlugin({
       'process.env': {
-        'BACKEND_URL': JSON.stringify(process.env.BACKEND_URL || 'https://chef-dojo-backend-b16a71e8fca3.herokuapp.com')
+        'BACKEND_URL': JSON.stringify(process.env.BACKEND_URL)
       }
     })
   ]
